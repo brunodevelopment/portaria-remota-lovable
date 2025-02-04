@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 interface PetsProps {
   isCollapsed: boolean;
@@ -40,40 +41,45 @@ const Pets = ({ isCollapsed, setIsCollapsed }: PetsProps) => {
   ];
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Pets</h2>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {mockPets.map((pet) => (
-          <Card key={pet.id}>
-            <CardHeader>
-              <img
-                src={pet.image}
-                alt={pet.name}
-                className="w-full h-48 object-cover rounded-lg"
-              />
-            </CardHeader>
-            <CardContent>
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="font-semibold text-lg">{pet.name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {pet.breed} • {pet.age} years old
-                  </p>
+    <div className="min-h-screen bg-background flex relative">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
+        isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
+      }`}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">Pets</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-4">
+          {mockPets.map((pet) => (
+            <Card key={pet.id}>
+              <CardHeader>
+                <img
+                  src={pet.image}
+                  alt={pet.name}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-semibold text-lg">{pet.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {pet.breed} • {pet.age} years old
+                    </p>
+                  </div>
+                  <Badge variant={pet.status === "Available" ? "default" : "secondary"}>
+                    {pet.status}
+                  </Badge>
                 </div>
-                <Badge variant={pet.status === "Available" ? "default" : "secondary"}>
-                  {pet.status}
-                </Badge>
-              </div>
-              <Button className="w-full" disabled={pet.status !== "Available"}>
-                <Heart className="mr-2 h-4 w-4" />
-                {pet.status === "Available" ? "Adopt Me" : "Already Adopted"}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                <Button className="w-full" disabled={pet.status !== "Available"}>
+                  <Heart className="mr-2 h-4 w-4" />
+                  {pet.status === "Available" ? "Adopt Me" : "Already Adopted"}
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </main>
     </div>
   );
 };
