@@ -9,7 +9,7 @@ import {
   ArrowRightLeft,
   Package,
   FileText,
-  Poll,
+  BarChart,
   PawPrint,
   Search,
   Settings,
@@ -159,7 +159,7 @@ const Navbar = ({ isCollapsed, setIsCollapsed }: NavbarProps) => {
               isActive("/polls") ? "bg-primary/10 text-primary" : "hover:bg-primary/5"
             )}
           >
-            <Poll className="h-5 w-5 flex-shrink-0" />
+            <BarChart className="h-5 w-5 flex-shrink-0" />
             {!isCollapsed && <span>Polls</span>}
           </Link>
 
