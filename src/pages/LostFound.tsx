@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 interface LostFoundProps {
   isCollapsed: boolean;
@@ -46,47 +47,52 @@ const LostFound = ({ isCollapsed, setIsCollapsed }: LostFoundProps) => {
   ];
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Lost & Found</h2>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {mockItems.map((item) => (
-          <Card key={item.id}>
-            <CardHeader>
-              <img
-                src={item.image}
-                alt={item.item}
-                className="w-full h-48 object-cover rounded-lg"
-              />
-            </CardHeader>
-            <CardContent>
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <Badge
-                    variant={item.type === "Lost" ? "destructive" : "default"}
-                    className="mb-2"
-                  >
-                    {item.type}
-                  </Badge>
-                  <h3 className="font-semibold text-lg">{item.item}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {item.location} • {item.date}
-                  </p>
+    <div className="min-h-screen bg-background flex relative">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
+        isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
+      }`}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">Lost & Found</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-4">
+          {mockItems.map((item) => (
+            <Card key={item.id}>
+              <CardHeader>
+                <img
+                  src={item.image}
+                  alt={item.item}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <Badge
+                      variant={item.type === "Lost" ? "destructive" : "default"}
+                      className="mb-2"
+                    >
+                      {item.type}
+                    </Badge>
+                    <h3 className="font-semibold text-lg">{item.item}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {item.location} • {item.date}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-sm mb-4">{item.description}</p>
-              <div className="space-y-2">
-                <p className="text-sm font-medium">Contact: {item.contact}</p>
-                <Button className="w-full" variant="outline">
-                  <Phone className="mr-2 h-4 w-4" />
-                  Call {item.phone}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                <p className="text-sm mb-4">{item.description}</p>
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Contact: {item.contact}</p>
+                  <Button className="w-full" variant="outline">
+                    <Phone className="mr-2 h-4 w-4" />
+                    Call {item.phone}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </main>
     </div>
   );
 };

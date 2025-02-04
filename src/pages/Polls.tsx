@@ -3,6 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import Navbar from "@/components/Navbar";
 
 interface PollsProps {
   isCollapsed: boolean;
@@ -35,38 +36,43 @@ const Polls = ({ isCollapsed, setIsCollapsed }: PollsProps) => {
   ];
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Polls</h2>
-      </div>
-      <div className="grid gap-4">
-        {mockPolls.map((poll) => (
-          <Card key={poll.id}>
-            <CardHeader>
-              <CardTitle>{poll.question}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <RadioGroup defaultValue={poll.options[0].id}>
-                  {poll.options.map((option) => (
-                    <div key={option.id} className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={option.id} id={`${poll.id}-${option.id}`} />
-                        <Label htmlFor={`${poll.id}-${option.id}`}>{option.text}</Label>
+    <div className="min-h-screen bg-background flex relative">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
+        isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
+      }`}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tight">Polls</h2>
+        </div>
+        <div className="grid gap-4 mt-4">
+          {mockPolls.map((poll) => (
+            <Card key={poll.id}>
+              <CardHeader>
+                <CardTitle>{poll.question}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <RadioGroup defaultValue={poll.options[0].id}>
+                    {poll.options.map((option) => (
+                      <div key={option.id} className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value={option.id} id={`${poll.id}-${option.id}`} />
+                          <Label htmlFor={`${poll.id}-${option.id}`}>{option.text}</Label>
+                        </div>
+                        <Progress value={(option.votes / poll.totalVotes) * 100} />
+                        <div className="text-sm text-muted-foreground">
+                          {option.votes} votes ({((option.votes / poll.totalVotes) * 100).toFixed(1)}%)
+                        </div>
                       </div>
-                      <Progress value={(option.votes / poll.totalVotes) * 100} />
-                      <div className="text-sm text-muted-foreground">
-                        {option.votes} votes ({((option.votes / poll.totalVotes) * 100).toFixed(1)}%)
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-                <Button className="w-full">Vote</Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                    ))}
+                  </RadioGroup>
+                  <Button className="w-full">Vote</Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </main>
     </div>
   );
 };
