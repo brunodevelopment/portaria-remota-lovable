@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -46,42 +47,47 @@ const Transactions = ({ isCollapsed, setIsCollapsed }: TransactionsProps) => {
   ];
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Transactions</h2>
-      </div>
-      <div className="grid gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockTransactions.map((transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell>{transaction.date}</TableCell>
-                    <TableCell>{transaction.description}</TableCell>
-                    <TableCell>{transaction.type}</TableCell>
-                    <TableCell className={`text-right ${
-                      transaction.amount > 0 ? "text-green-500" : "text-red-500"
-                    }`}>
-                      ${Math.abs(transaction.amount).toFixed(2)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+    <div className="flex h-screen bg-background">
+      <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <div className={`flex-1 overflow-auto transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'}`}>
+        <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold tracking-tight">Transactions</h2>
+          </div>
+          <div className="grid gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Transactions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead className="text-right">Amount</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {mockTransactions.map((transaction) => (
+                      <TableRow key={transaction.id}>
+                        <TableCell>{transaction.date}</TableCell>
+                        <TableCell>{transaction.description}</TableCell>
+                        <TableCell>{transaction.type}</TableCell>
+                        <TableCell className={`text-right ${
+                          transaction.amount > 0 ? "text-green-500" : "text-red-500"
+                        }`}>
+                          ${Math.abs(transaction.amount).toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
