@@ -11,7 +11,7 @@ import {
 
 interface TransactionsProps {
   isCollapsed: boolean;
-  setIsCollapsed: (collapsed: boolean) => void;
+  setIsCollapsed: (value: boolean) => void;
 }
 
 const Transactions = ({ isCollapsed, setIsCollapsed }: TransactionsProps) => {
@@ -47,10 +47,12 @@ const Transactions = ({ isCollapsed, setIsCollapsed }: TransactionsProps) => {
   ];
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="min-h-screen bg-background flex relative">
       <Navbar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <div className={`flex-1 overflow-auto transition-all duration-300 ${isCollapsed ? 'ml-[60px]' : 'ml-64'}`}>
-        <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+      <main className={`flex-1 p-4 sm:p-8 transition-all duration-300 ${
+        isCollapsed ? 'ml-[60px]' : 'ml-[60px] sm:ml-64'
+      }`}>
+        <div className="flex-1 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold tracking-tight">Transactions</h2>
           </div>
@@ -88,7 +90,7 @@ const Transactions = ({ isCollapsed, setIsCollapsed }: TransactionsProps) => {
             </Card>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
